@@ -24,13 +24,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HangmanGame()
+            Hangman()
         }
     }
 }
 
 @Composable
-fun HangmanGame() {
+fun Hangman() {
     // Uses the stored list of words in the hangwords.xml
     val words = stringArrayResource(id = R.array.hangwords)
     // Randomises the word on reset
@@ -44,7 +44,7 @@ fun HangmanGame() {
 
     // Displays an new iteration of the word, where if the letters are not in guessed letters
     // will appear as an underscore
-    val display = word.map { if (it in guessedLetters) it else '_' }.joinToString("")
+    val word_rendered = word.map { if (it in guessedLetters) it else '_' }.joinToString("")
 
     // Column to house text and buttons
     Column(
@@ -55,7 +55,7 @@ fun HangmanGame() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // The display word rendered with any underscores
-        Text("Word: $display",
+        Text("Word: $word_rendered",
             fontSize = 24.sp)
         Spacer(Modifier.padding(16.dp))
         // Displays how many guesses left
@@ -111,7 +111,7 @@ fun HangmanGame() {
                 fontWeight = FontWeight.Bold)
         }
         // Displays "You Win" if the display word matches the original word
-        if (display == word) {
+        if (word_rendered == word) {
             Spacer(Modifier.padding(16.dp))
             Text("You Win", fontSize = 48.sp,
                 fontWeight = FontWeight.Bold)
